@@ -1,4 +1,4 @@
-package com.carmanagement.backend.rest;
+package com.carservice.backend.rest;
 
 import java.net.URI;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.carmanagement.backend.model.Car;
-import com.carmanagement.backend.repository.CarRepository;
+import com.carservice.backend.model.Car;
+import com.carservice.backend.repository.CarRepository;
 
 @RestController
 @RequestMapping("/cars")

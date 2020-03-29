@@ -1,10 +1,10 @@
-package com.carmanagement.backend.repository;
+package com.carservice.backend.repository;
 
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.carmanagement.backend.model.Car;
+import com.carservice.backend.model.Car;
 
 public interface CarRepository extends MongoRepository<Car, String> {
 
