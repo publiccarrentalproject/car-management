@@ -1,6 +1,7 @@
 package com.carmanagement.backend.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor
+@Document("Car")
 public class Car {
 	@Id
 	private String plateNumber;
@@ -25,8 +27,9 @@ public class Car {
 	private int fuelConsumption;
 	private int numberOfDoors;
 	private int numberOfSeats;
-	private Color color;
+	private boolean rentable;
 
+	private Color color;
 	private Infotainment[] infotainmentTypes;
 
 }
