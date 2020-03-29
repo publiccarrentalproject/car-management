@@ -1,4 +1,4 @@
-# car-management
-This project includes the frontend and backend microservices of the car management.
+# car-service
+This project includes the frontend and backend microservices of the car service.
 
-![Car Management Architecture](car-management.jpg)
+![Car Service Architecture](car-service.jpg)

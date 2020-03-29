@@ -1,1 +1,1 @@
-This project includes the backend microservice of the car management.
+This project includes the backend microservice of the car service.
