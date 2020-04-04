@@ -1,8 +1,8 @@
 version: "3"
 services:
-  nosql-db:
+  mongodb:
     image: mongo:bionic
-    container_name: "nosql-db"
+    container_name: "mongodb"
     ports:
       - 27017:27017
   api:
@@ -10,4 +10,4 @@ services:
     ports:
       - 8080:8080
     links:
-      - nosql-db
+      - mongodb
