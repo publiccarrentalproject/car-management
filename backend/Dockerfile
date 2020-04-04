@@ -2,7 +2,6 @@ FROM adoptopenjdk/openjdk11:alpine-slim
 
 EXPOSE 8585
 
-VOLUME /tmp
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} backend.jar
 
