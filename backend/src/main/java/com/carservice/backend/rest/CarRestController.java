@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,14 @@ public class CarRestController {
 
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping(value = "/car/{plateNumber}")
+	public ResponseEntity<Car> getCars(@PathVariable("plateNumber") String plateNumber) {
+		Car result = carRepository.findByPlateNumber(plateNumber);
+
+		return ResponseEntity.ok(result);
+	}
+	
 
 	@PostMapping(value = "/car")
 	public ResponseEntity<URI> createCar(@RequestBody Car car) {
@@ -44,5 +54,11 @@ public class CarRestController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+	
+    @DeleteMapping("/car/{plateNumber}")
+    public void deleteByPlateNumber(@PathVariable("plateNumber") String plateNumber){
+        this.carRepository.deleteByPlateNumber(plateNumber);
+    }
+
 
 }
