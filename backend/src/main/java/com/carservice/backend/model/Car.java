@@ -5,16 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
 @Builder(toBuilder = true)
-@ToString
-@EqualsAndHashCode
+@Data
 @AllArgsConstructor
 @Document("Car")
 public class Car {
