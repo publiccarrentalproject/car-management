@@ -38,6 +38,10 @@ public class CarRestController {
 	public ResponseEntity<Car> getCars(@PathVariable("plateNumber") String plateNumber) {
 		Car result = carRepository.findByPlateNumber(plateNumber);
 
+		if (result == null) {
+			return ResponseEntity.notFound().build();
+		}
+
 		return ResponseEntity.ok(result);
 	}
 
@@ -58,17 +62,34 @@ public class CarRestController {
 
 	@PutMapping(value = "/car/{plateNumber}")
 	public ResponseEntity<?> updateOwner(@PathVariable("plateNumber") String plateNumber, @RequestBody Car aCar) {
-		System.out.println(aCar);
 		Car car = carRepository.findByPlateNumber(plateNumber);
+
+		if (car == null) {
+			return ResponseEntity.notFound().build();
+		}
+
 		BeanUtils.copyProperties(aCar, car, "id");
-		System.out.println(car);
-		carRepository.save(car);
+
+		try {
+			carRepository.save(car);
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/car/{plateNumber}")
-	public void deleteByPlateNumber(@PathVariable("plateNumber") String plateNumber) {
+	public ResponseEntity<?> deleteByPlateNumber(@PathVariable("plateNumber") String plateNumber) {
+		Car car = carRepository.findByPlateNumber(plateNumber);
+
+		if (car == null) {
+			return ResponseEntity.notFound().build();
+		}
+
 		this.carRepository.deleteByPlateNumber(plateNumber);
+		
+		return ResponseEntity.ok().build();
 	}
 
 }
