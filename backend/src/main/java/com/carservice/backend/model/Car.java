@@ -17,6 +17,8 @@ import lombok.ToString;
 @Document("Car")
 public class Car {
 	@Id
+	private String id;
+	
 	private String plateNumber;
 
 	private String brand;
