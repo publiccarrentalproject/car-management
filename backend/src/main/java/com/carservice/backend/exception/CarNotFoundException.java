@@ -1,4 +1,4 @@
-package com.carservice.exception;
+package com.carservice.backend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
