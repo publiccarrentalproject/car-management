@@ -2,7 +2,7 @@ package com.carservice.backend.service;
 
 import com.carservice.backend.model.Car;
 import com.carservice.backend.repository.CarRepository;
-import com.carservice.exception.CarNotFoundException;
+import com.carservice.backend.exception.CarNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
