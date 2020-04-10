@@ -12,7 +12,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Data
 @AllArgsConstructor
 @Document("Car")
-public class Car extends RepresentationModel<Car> {
+public class Car {
 	@Id
 	private String id;
 	
