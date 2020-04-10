@@ -4,9 +4,15 @@ import com.carservice.backend.exception.CarException;
 import com.carservice.backend.model.Car;
 import com.carservice.backend.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -39,5 +45,17 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car save(Car car) {
         return carRepository.save(car);
+    }
+
+    public ResponseEntity<?> errorMap(BindingResult result){
+
+        var errorM = new HashMap<>();
+
+        for(FieldError error: result.getFieldErrors()){
+            errorM.put(error.getField(),error.getDefaultMessage());
+        }
+
+        return new ResponseEntity<>(errorM, HttpStatus.BAD_REQUEST);
+
     }
 }

@@ -5,9 +5,11 @@ import com.carservice.backend.service.CarService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -30,7 +32,11 @@ public class CarRestController {
     }
 
     @PostMapping(value = "/car")
-    public ResponseEntity<URI> createCar(@RequestBody Car car) {
+    public ResponseEntity<?> createCar(@Valid @RequestBody Car car, BindingResult result) {
+        if(result.hasErrors()) {
+            return carService.errorMap(result);
+        }
+
         carService.save(car);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{plateNumber}")
