@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.URI;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
@@ -60,37 +62,48 @@ public class CarRestController {
     }
 
     @PostMapping(value = "/car")
-    public ResponseEntity<URI> createCar(@RequestBody Car car) {
-        try {
-            carService.save(car);
+    public ResponseEntity<?> createCar(@RequestBody Car car) {
+        Car savedCar = carService.save(car);
 
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{plateNumber}")
-                    .buildAndExpand(car.getPlateNumber()).toUri();
-
-            return ResponseEntity.created(location).build();
-
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        return new EntityModel<Car>(savedCar,
+                linkTo(methodOn(CarRestController.class).getCar(savedCar.getPlateNumber())).withSelfRel()
+                        .andAffordance(afford(methodOn(CarRestController.class).updateCar(savedCar.getPlateNumber(), savedCar)))
+                        .andAffordance(afford(methodOn(CarRestController.class).deleteByPlateNumber(savedCar.getPlateNumber()))),
+                linkTo(methodOn(CarRestController.class).getCars(true)).withRel("cars")).getLink(IanaLinkRelations.SELF)
+                .map(Link::getHref)
+                .map(href -> {
+                    try {
+                        return new URI(href);
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .map(uri -> ResponseEntity.noContent().location(uri).build())
+                .orElse(ResponseEntity.badRequest().body("Unable to create " + car));
     }
 
     @PutMapping(value = "/car/{plateNumber}")
     public ResponseEntity<?> updateCar(@PathVariable("plateNumber") String plateNumber, @RequestBody Car aCar) {
-        try {
+        Car car = carService.findByPlateNumber(plateNumber);
 
-            Car car = carService.findByPlateNumber(plateNumber);
+        BeanUtils.copyProperties(aCar, car, "id");
 
-            BeanUtils.copyProperties(aCar, car, "id");
+        Car updatedCar = carService.save(car);
 
-            carService.save(car);
-
-            return ResponseEntity.ok().build();
-
-        } catch (CarException ex) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        return new EntityModel<>(updatedCar,
+                linkTo(methodOn(CarRestController.class).getCar(updatedCar.getId())).withSelfRel()
+                        .andAffordance(afford(methodOn(CarRestController.class).updateCar(updatedCar.getPlateNumber(), updatedCar)))
+                        .andAffordance(afford(methodOn(CarRestController.class).deleteByPlateNumber(updatedCar.getPlateNumber()))),
+                linkTo(methodOn(CarRestController.class).getCars(true)).withRel("cars")).getLink(IanaLinkRelations.SELF)
+                .map(Link::getHref).map(href -> {
+                    try {
+                        return new URI(href);
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .map(uri -> ResponseEntity.noContent().location(uri).build()) //
+                .orElse(ResponseEntity.badRequest().body("Unable to update " + car));
     }
 
     @DeleteMapping("/car/{plateNumber}")

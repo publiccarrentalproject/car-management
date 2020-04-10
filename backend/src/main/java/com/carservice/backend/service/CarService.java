@@ -12,5 +12,5 @@ public interface CarService {
 
     void deleteByPlateNumber(String plateNumber);
 
-    void save(Car car);
+    Car save(Car car);
 }
