@@ -1,8 +1,8 @@
 package com.carservice.backend.service;
 
+import com.carservice.backend.exception.CarException;
 import com.carservice.backend.model.Car;
 import com.carservice.backend.repository.CarRepository;
-import com.carservice.backend.exception.CarNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +10,12 @@ import java.util.List;
 
 @Service
 public class CarServiceImpl implements CarService {
-    @Autowired
     private CarRepository carRepository;
+
+    @Autowired
+    public CarServiceImpl(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     @Override
     public List<Car> findByRentable(boolean isRentable) {
@@ -22,7 +26,7 @@ public class CarServiceImpl implements CarService {
     public Car findByPlateNumber(String plateNumber) {
         Car car = carRepository.findByPlateNumber(plateNumber);
         if(car == null) {
-            throw new CarNotFoundException("Car not found with plate number :" + plateNumber);
+            throw new CarException("Car not found with plate number :" + plateNumber);
         }
         return car;
     }

@@ -6,12 +6,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 @Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @Document("Car")
-public class Car {
+public class Car extends RepresentationModel<Car> {
 	@Id
 	private String id;
 	

@@ -1,39 +1,62 @@
 package com.carservice.backend.rest;
 
+import com.carservice.backend.exception.CarException;
 import com.carservice.backend.model.Car;
 import com.carservice.backend.service.CarService;
-import com.carservice.backend.exception.CarNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @RequestMapping("/rest")
 public class CarRestController {
-    @Autowired
     private CarService carService;
 
-    @GetMapping(value = "/cars")
-    public ResponseEntity<List<Car>> getCars(@RequestParam("rentable") boolean rentable) {
-        List<Car> result = carService.findByRentable(rentable);
+    @Autowired
+    public CarRestController(CarService carService) {
+        this.carService = carService;
+    }
 
-        return ResponseEntity.ok(result);
+    @GetMapping(value = "/cars")
+    public CollectionModel<EntityModel<Car>> getCars(@RequestParam("rentable") boolean rentable) {
+
+        List<EntityModel<Car>> cars = StreamSupport.stream(carService.findByRentable(rentable).spliterator(), false)
+                .map(car -> new EntityModel<Car>(car,
+                        linkTo(methodOn(CarRestController.class).getCar(car.getPlateNumber())).withSelfRel(),
+                        linkTo(methodOn(CarRestController.class).getCars(rentable)).withRel("cars")))
+                .collect(Collectors.toList());
+
+        return new CollectionModel<>(
+                cars,
+                linkTo(methodOn(CarRestController.class).getCars(rentable)).withSelfRel()
+                        .andAffordance(afford(methodOn(CarRestController.class).createCar(null))));
     }
 
     @GetMapping(value = "/car/{plateNumber}")
-    public ResponseEntity<Car> getCars(@PathVariable("plateNumber") String plateNumber) {
-        try {
-            Car car = carService.findByPlateNumber(plateNumber);
-            return ResponseEntity.ok(car);
-        } catch (CarNotFoundException ex) {
-            return ResponseEntity.notFound().build();
-        }
+    public EntityModel<Car> getCar(@PathVariable("plateNumber") String plateNumber) {
+        Class<CarRestController> controllerClass = CarRestController.class;
+        Link findOneLink = linkTo(methodOn(controllerClass).getCar(plateNumber)).withSelfRel();
+
+        Car car = carService.findByPlateNumber(plateNumber);
+
+        return new EntityModel<Car>(car,
+                findOneLink
+                .andAffordance(afford(methodOn(controllerClass).updateCar(plateNumber, car)))
+                .andAffordance(afford(methodOn(controllerClass).deleteByPlateNumber(plateNumber))));
     }
 
     @PostMapping(value = "/car")
@@ -52,7 +75,7 @@ public class CarRestController {
     }
 
     @PutMapping(value = "/car/{plateNumber}")
-    public ResponseEntity<?> updateOwner(@PathVariable("plateNumber") String plateNumber, @RequestBody Car aCar) {
+    public ResponseEntity<?> updateCar(@PathVariable("plateNumber") String plateNumber, @RequestBody Car aCar) {
         try {
 
             Car car = carService.findByPlateNumber(plateNumber);
@@ -63,7 +86,7 @@ public class CarRestController {
 
             return ResponseEntity.ok().build();
 
-        } catch (CarNotFoundException ex) {
+        } catch (CarException ex) {
             return ResponseEntity.notFound().build();
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -79,7 +102,7 @@ public class CarRestController {
 
             return ResponseEntity.ok().build();
 
-        } catch (CarNotFoundException ex) {
+        } catch (CarException ex) {
             return ResponseEntity.notFound().build();
         }
     }
