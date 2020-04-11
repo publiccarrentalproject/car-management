@@ -1,10 +1,10 @@
 package com.carservice.backend.exception;
 
 
-public class CarNotFoundResponse {
+public class CarExceptionResponse {
     private String carNotFound;
 
-    public CarNotFoundResponse(String message) {
+    public CarExceptionResponse(String message) {
        this.carNotFound = message;
     }
 }

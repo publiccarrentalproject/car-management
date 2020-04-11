@@ -1,6 +1,7 @@
 package com.carservice.backend.service;
 
-import com.carservice.backend.exception.CarException;
+import com.carservice.backend.exception.CarAlreadyExistsException;
+import com.carservice.backend.exception.CarNotFoundException;
 import com.carservice.backend.model.Car;
 import com.carservice.backend.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CarServiceImpl implements CarService {
     public Car findByPlateNumber(String plateNumber) {
         Car car = carRepository.findByPlateNumber(plateNumber);
         if(car == null) {
-            throw new CarException("Car not found with plate number :" + plateNumber);
+            throw new CarNotFoundException("Car not found with plate number :" + plateNumber);
         }
         return car;
     }
@@ -44,6 +45,11 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car save(Car car) {
+        Car aCar = carRepository.findByPlateNumber(car.getPlateNumber());
+        if(aCar != null) {
+            throw new CarAlreadyExistsException("Car with plate number " + car.getPlateNumber() + "  already exists!");
+        }
+
         return carRepository.save(car);
     }
 
