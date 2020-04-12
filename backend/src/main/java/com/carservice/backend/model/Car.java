@@ -3,15 +3,18 @@ package com.carservice.backend.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document("Car")
 public class Car {
     @Id
@@ -26,8 +29,9 @@ public class Car {
     @NotBlank(message = "Model cannot be empty!")
     private String model;
 
-    @NotBlank(message = "Year cannot be empty!")
-    private String year;
+    @Min(value = 2010, message = "Year {javax.validation.constraints.Min.message}")
+    @Max(value = 2021, message = "Year {javax.validation.constraints.Max.message}")
+    private int year;
 
     @NotBlank(message = "Engine cannot be empty!")
     private String engine;
