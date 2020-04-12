@@ -68,6 +68,22 @@ public class CarRestControllerTest {
         MatcherAssert.assertThat(response.getBody().getPlateNumber(), Matchers.equalTo("EE-4321-EE"));
     }
 
+    @Test
+    public void testUpdateCar() {
+        RestTemplate restTemplate = new RestTemplate();
+        Car car = restTemplate.getForObject(createURLWithPort("/rest/car/EE-4321-EE"), Car.class);
+        car.setModel("Yaris");
+        car.setYear(2012);
+        car.setEngine("1.4D");
+
+        restTemplate.put(createURLWithPort("/rest/car/EE-4321-EE"), car);
+        Car carUpdated = restTemplate.getForObject(createURLWithPort("/rest/car/EE-4321-EE"), Car.class);
+
+        MatcherAssert.assertThat(carUpdated.getModel(), Matchers.equalTo(car.getModel()));
+        MatcherAssert.assertThat(carUpdated.getYear(), Matchers.equalTo(car.getYear()));
+        MatcherAssert.assertThat(carUpdated.getEngine(), Matchers.equalTo(car.getEngine()));
+    }
+
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }

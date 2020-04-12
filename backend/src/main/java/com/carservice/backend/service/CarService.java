@@ -16,5 +16,7 @@ public interface CarService {
 
     Car save(Car car);
 
+    Car update(String plateNumber, Car car);
+
     ResponseEntity<?> errorMap(BindingResult result);
 }

@@ -13,7 +13,6 @@ import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -32,7 +31,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car findByPlateNumber(String plateNumber) {
         Car car = carRepository.findByPlateNumber(plateNumber);
-        if(car == null) {
+        if (car == null) {
             throw new CarNotFoundException("Car not found with plate number :" + plateNumber);
         }
         return car;
@@ -46,19 +45,32 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car save(Car car) {
         Car aCar = carRepository.findByPlateNumber(car.getPlateNumber());
-        if(aCar != null) {
+        if (aCar != null) {
             throw new CarAlreadyExistsException("Car with plate number " + car.getPlateNumber() + "  already exists!");
         }
 
         return carRepository.save(car);
     }
 
-    public ResponseEntity<?> errorMap(BindingResult result){
+    @Override
+    public Car update(String plateNumber, Car car) {
+        // Check whether the plate number is changed or not
+        if (plateNumber.equalsIgnoreCase(car.getPlateNumber()) == false) {
+            Car aCar = carRepository.findByPlateNumber(car.getPlateNumber());
+            if (aCar != null) {
+                throw new CarAlreadyExistsException("Car with plate number " + car.getPlateNumber() + "  already exists!");
+            }
+        }
+
+        return carRepository.save(car);
+    }
+
+    public ResponseEntity<?> errorMap(BindingResult result) {
 
         var errorM = new HashMap<>();
 
-        for(FieldError error: result.getFieldErrors()){
-            errorM.put(error.getField(),error.getDefaultMessage());
+        for (FieldError error : result.getFieldErrors()) {
+            errorM.put(error.getField(), error.getDefaultMessage());
         }
 
         return new ResponseEntity<>(errorM, HttpStatus.BAD_REQUEST);

@@ -51,7 +51,7 @@ public class CarRestController {
 
         BeanUtils.copyProperties(aCar, car, "id");
 
-        carService.save(car);
+        carService.update(plateNumber, car);
 
         return ResponseEntity.ok().build();
     }
