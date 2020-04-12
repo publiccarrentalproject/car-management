@@ -1,10 +1,12 @@
 package com.carservice.backend.exception;
 
+import lombok.Data;
 
+@Data
 public class CarExceptionResponse {
-    private String carNotFound;
+    private String message;
 
     public CarExceptionResponse(String message) {
-       this.carNotFound = message;
+       this.message = message;
     }
 }
