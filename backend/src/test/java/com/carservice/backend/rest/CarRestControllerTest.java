@@ -84,6 +84,11 @@ public class CarRestControllerTest {
         MatcherAssert.assertThat(carUpdated.getEngine(), Matchers.equalTo(car.getEngine()));
     }
 
+    @Test
+    public void testDeleteCar() {
+        restTemplate.delete(createURLWithPort("/rest/car/EE-4321-EE"));
+    }
+
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }
