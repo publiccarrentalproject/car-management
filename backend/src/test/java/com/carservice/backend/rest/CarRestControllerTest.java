@@ -1,7 +1,5 @@
 package com.carservice.backend.rest;
 
-import com.carservice.backend.exception.CarExceptionResponse;
-import com.carservice.backend.exception.CarNotFoundException;
 import com.carservice.backend.model.Car;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestClientException;
@@ -20,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -45,7 +42,7 @@ public class CarRestControllerTest {
     }
 
     @Test
-    public void testCreateOwner() {
+    public void testCreateCar() {
         Car car = new Car();
         car.setPlateNumber("DD-4321-DD");
         car.setBrand("Toyota");
@@ -65,6 +62,27 @@ public class CarRestControllerTest {
 
         MatcherAssert.assertThat(carSaved.getPlateNumber(), Matchers.equalTo(car.getPlateNumber()));
         MatcherAssert.assertThat(carSaved.getBrand(), Matchers.equalTo(car.getBrand()));
+    }
+
+    @Test
+    public void testCreateCarInvalidData() {
+        Car car = new Car();
+        car.setPlateNumber("DD-4321-DD");
+        car.setBrand("Toyota");
+        car.setModel("Corolla");
+        car.setYear(-1);
+        car.setEngine("D-4D");
+        car.setFuelType("Diesel");
+        car.setFuelConsumption(-1);
+        car.setNumberOfDoors(-1);
+        car.setNumberOfSeats(-1);
+        car.setRentable(true);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        assertThatThrownBy(() -> {
+            restTemplate.postForLocation(createURLWithPort("/rest/car"), car);
+        });
     }
 
     @Test
