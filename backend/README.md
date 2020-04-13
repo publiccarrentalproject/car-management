@@ -26,9 +26,8 @@ docker-compose up
 
 
 
-
-#####Resources:
-1. https://www.toptal.com/java/spring-boot-rest-api-error-handling
-2. 
+Resources:
+1. https://www.udemy.com/course/spring-boot-egitimi/
+2. https://www.toptal.com/java/spring-boot-rest-api-error-handling
 
 
