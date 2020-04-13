@@ -1,5 +1,10 @@
 This project includes the backend microservice of the car service.
 
+
+
+![Car Service Backend Architecture](backend.jpg)
+
+
 ### 1. Run the following command to build and create backend jar file:
 ```sh
 mvn package -Dmaven.test.skip=true
@@ -10,5 +15,20 @@ mvn package -Dmaven.test.skip=true
 docker-compose up
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+#####Resources:
+1. https://www.toptal.com/java/spring-boot-rest-api-error-handling
+2. 
 
 
