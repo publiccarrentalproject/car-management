@@ -16,6 +16,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -33,12 +36,23 @@ public class CarRestControllerTest {
     @BeforeEach
     public void setUp() {
         restTemplate = new RestTemplate();
-        dataProvider.createUsers();
+        dataProvider.createCars();
     }
 
     @AfterEach
     public void cleanUp() {
         dataProvider.deleteUsers();
+    }
+
+
+    @Test
+    public void tesGetAllCars() {
+        ResponseEntity<List> response = restTemplate.getForEntity(createURLWithPort("/rest/cars?rentable=true"), List.class);
+        MatcherAssert.assertThat(response.getStatusCodeValue(), Matchers.equalTo(200));
+
+        List<Map<String, String>> body = response.getBody();
+        List<String> models = body.stream().map(e -> e.get("model")).collect(Collectors.toList());
+        MatcherAssert.assertThat(models, Matchers.containsInAnyOrder("Corolla", "Yaris"));
     }
 
     @Test
