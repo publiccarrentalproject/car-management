@@ -58,7 +58,7 @@ public class CarServiceImpl implements CarService {
         if (plateNumber.equalsIgnoreCase(car.getPlateNumber()) == false) {
             Car aCar = carRepository.findByPlateNumber(car.getPlateNumber());
             if (aCar != null) {
-                throw new CarAlreadyExistsException("Car with plate number " + car.getPlateNumber() + "  already exists!");
+                throw new CarAlreadyExistsException("Car with plate number " + car.getPlateNumber() + " already exists!");
             }
         }
 
