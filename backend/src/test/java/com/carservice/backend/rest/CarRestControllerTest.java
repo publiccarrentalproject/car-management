@@ -42,7 +42,7 @@ public class CarRestControllerTest {
 
     @AfterEach
     public void cleanUp() {
-        dataProvider.deleteUsers();
+        dataProvider.deleteCars();
     }
 
 
@@ -77,6 +77,29 @@ public class CarRestControllerTest {
 
         MatcherAssert.assertThat(carSaved.getPlateNumber(), Matchers.equalTo(car.getPlateNumber()));
         MatcherAssert.assertThat(carSaved.getBrand(), Matchers.equalTo(car.getBrand()));
+    }
+
+    @Test
+    public void testCarAlreadyExists() {
+        Car car = new Car();
+        car.setPlateNumber("DD-4321-DD");
+        car.setBrand("Toyota");
+        car.setModel("Corolla");
+        car.setYear(2011);
+        car.setEngine("D-4D");
+        car.setFuelType("Diesel");
+        car.setFuelConsumption(6);
+        car.setNumberOfDoors(4);
+        car.setNumberOfSeats(5);
+        car.setRentable(true);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        assertThatThrownBy(() -> {
+            restTemplate.postForLocation(createURLWithPort("/rest/car"), car);
+            restTemplate.postForLocation(createURLWithPort("/rest/car"), car);
+        }).isInstanceOf(HttpClientErrorException.class)
+                .hasMessageContaining("Car with plate number DD-4321-DD already exists!");
     }
 
     @Test
