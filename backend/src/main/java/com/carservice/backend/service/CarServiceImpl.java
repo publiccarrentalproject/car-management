@@ -46,7 +46,7 @@ public class CarServiceImpl implements CarService {
     public Car save(Car car) {
         Car aCar = carRepository.findByPlateNumber(car.getPlateNumber());
         if (aCar != null) {
-            throw new CarAlreadyExistsException("Car with plate number " + car.getPlateNumber() + "  already exists!");
+            throw new CarAlreadyExistsException("Car with plate number " + car.getPlateNumber() + " already exists!");
         }
 
         return carRepository.save(car);
