@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 public class CarRestControllerTest {
     private RestTemplate restTemplate;
 
@@ -105,6 +106,15 @@ public class CarRestControllerTest {
 
         MatcherAssert.assertThat(response.getStatusCodeValue(), Matchers.equalTo(200));
         MatcherAssert.assertThat(response.getBody().getPlateNumber(), Matchers.equalTo("EE-4321-EE"));
+    }
+
+    @Test
+    public void testCarNotFound() {
+        assertThatThrownBy(() -> {
+            restTemplate.getForEntity(createURLWithPort("/rest/car/XX-4321-XX"), Car.class);
+        }).isInstanceOf(HttpClientErrorException.class)
+                .hasMessageContaining("Car not found");
+
     }
 
     @Test
