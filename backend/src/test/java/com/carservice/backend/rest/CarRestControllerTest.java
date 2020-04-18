@@ -144,7 +144,7 @@ public class CarRestControllerTest {
     public void testUpdateCar() {
         RestTemplate restTemplate = new RestTemplate();
         Car car = restTemplate.getForObject(createURLWithPort("/rest/car/EE-4321-EE"), Car.class);
-        car.setModel("Yaris");
+        car.setModel("Auris");
         car.setYear(2012);
         car.setEngine("1.4D");
 
@@ -154,6 +154,18 @@ public class CarRestControllerTest {
         MatcherAssert.assertThat(carUpdated.getModel(), Matchers.equalTo(car.getModel()));
         MatcherAssert.assertThat(carUpdated.getYear(), Matchers.equalTo(car.getYear()));
         MatcherAssert.assertThat(carUpdated.getEngine(), Matchers.equalTo(car.getEngine()));
+    }
+
+    @Test
+    public void testUpdatePlateNumberWithExistingOne() {
+        RestTemplate restTemplate = new RestTemplate();
+        Car car = restTemplate.getForObject(createURLWithPort("/rest/car/EE-4321-EE"), Car.class);
+        car.setPlateNumber("WW-9876-WW");
+
+        assertThatThrownBy(() -> {
+            restTemplate.put(createURLWithPort("/rest/car/EE-4321-EE"), car);
+        }).isInstanceOf(HttpClientErrorException.class)
+                .hasMessageContaining("Car with plate number WW-9876-WW already exists!");
     }
 
     @Test
