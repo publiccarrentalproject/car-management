@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.HttpClientErrorException;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -172,12 +174,11 @@ public class CarRestControllerTest {
     public void testDeleteCar() {
         restTemplate.delete(createURLWithPort("/rest/car/EE-4321-EE"));
 
-        try {
+        assertThatThrownBy(() -> {
             ResponseEntity<Car> response = restTemplate.getForEntity(createURLWithPort("/rest/car/EE-4321-EE"), Car.class);
-            Assertions.fail();
-        } catch (RestClientException ex) {
+        }).isInstanceOf(HttpClientErrorException.class)
+                .hasMessageContaining("Car not found");
 
-        }
     }
 
     private String createURLWithPort(String uri) {
