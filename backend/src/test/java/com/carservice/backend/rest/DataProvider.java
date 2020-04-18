@@ -48,7 +48,7 @@ public class DataProvider {
         carRepository.save(car2);
     }
 
-    public void deleteUsers() {
+    public void deleteCars() {
         carRepository.deleteByPlateNumber("EE-4321-EE");
         carRepository.deleteByPlateNumber("WW-9876-WW");
         carRepository.deleteByPlateNumber("DD-4321-DD");
