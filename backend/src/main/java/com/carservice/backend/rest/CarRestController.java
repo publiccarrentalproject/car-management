@@ -46,7 +46,11 @@ public class CarRestController {
     }
 
     @PutMapping(value = "/car/{plateNumber}")
-    public ResponseEntity<?> updateCar(@PathVariable("plateNumber") String plateNumber, @RequestBody Car aCar) {
+    public ResponseEntity<?> updateCar(@PathVariable("plateNumber") String plateNumber, @Valid @RequestBody Car aCar, BindingResult result) {
+        if(result.hasErrors()) {
+            return carService.errorMap(result);
+        }
+
         Car car = carService.findByPlateNumber(plateNumber);
 
         BeanUtils.copyProperties(aCar, car, "id");
