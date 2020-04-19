@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -118,7 +120,9 @@ public class CarRestControllerTest {
 
         assertThatThrownBy(() -> {
             restTemplate.postForLocation(createURLWithPort("/rest/car"), car);
-        }).hasMessageContaining("Number of seats must be greater than or equal to 1")
+        }).isInstanceOf(HttpStatusCodeException.class)
+                .hasFieldOrPropertyWithValue("statusCode", HttpStatus.BAD_REQUEST)
+                .hasMessageContaining("Number of seats must be greater than or equal to 1")
                 .hasMessageContaining("Year must be greater than or equal to 2010")
                 .hasMessageContaining("Number of doors must be greater than or equal to 1")
                 .hasMessageContaining("Fuel consumption must be greater than or equal to 0");
