@@ -1,0 +1,194 @@
+{
+	"id": "9c27817f-2e39-714b-d5f1-face3c8ff4a4",
+	"name": "car-service",
+	"description": "",
+	"order": [
+		"2a440127-c21d-d291-c64e-33d8dd8565d4",
+		"bf7f48d4-e983-908d-7423-e26d7de7299b",
+		"cc2c2f4f-ad21-28d9-431c-9453ca3022a4",
+		"ae9754b4-cd5a-143e-9c9a-60fa91cc0cfc",
+		"badc11b9-f95d-7746-eadd-3982fbe8496d"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1587302547096,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "2a440127-c21d-d291-c64e-33d8dd8565d4",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/rest/car",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "9c27817f-2e39-714b-d5f1-face3c8ff4a4",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/rest/car",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1587302550010,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\r\n\"plateNumber\": \"EE-4321-EE\",\r\n\"brand\": \"Toyota\",\r\n\"model\": \"Corolla\",\r\n\"year\": 2011,\r\n\"engine\": \"D-4D\",\r\n\"fuelType\": \"Diesel\",\r\n\"fuelConsumption\": 4,\r\n\"numberOfDoors\": 4,\r\n\"numberOfSeats\": 5,\r\n\"rentable\": true\r\n}"
+		},
+		{
+			"id": "ae9754b4-cd5a-143e-9c9a-60fa91cc0cfc",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/rest/car/EE-4321-EE",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "9c27817f-2e39-714b-d5f1-face3c8ff4a4",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/rest/car/EE-4321-EE",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1587303468090,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\r\n\"plateNumber\": \"EE-4321-EE\",\r\n\"brand\": \"Toyota\",\r\n\"model\": \"Auris\",\r\n\"year\": 2015,\r\n\"engine\": \"D-4D\",\r\n\"fuelType\": \"Diesel\",\r\n\"fuelConsumption\": 4,\r\n\"numberOfDoors\": 4,\r\n\"numberOfSeats\": 5,\r\n\"rentable\": true\r\n}"
+		},
+		{
+			"id": "badc11b9-f95d-7746-eadd-3982fbe8496d",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/rest/car/EE-4321-EE",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "9c27817f-2e39-714b-d5f1-face3c8ff4a4",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/rest/car/EE-4321-EE",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1587303499024,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": ""
+		},
+		{
+			"id": "bf7f48d4-e983-908d-7423-e26d7de7299b",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/rest/car",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "9c27817f-2e39-714b-d5f1-face3c8ff4a4",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/rest/car",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1587302603121,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\r\n\"plateNumber\": \"WW-9876-WW\",\r\n\"brand\": \"Toyota\",\r\n\"model\": \"Yaris\",\r\n\"year\": 2015,\r\n\"engine\": \"1.4\",\r\n\"fuelType\": \"Gasoline\",\r\n\"fuelConsumption\": 4,\r\n\"numberOfDoors\": 4,\r\n\"numberOfSeats\": 5,\r\n\"rentable\": true\r\n}"
+		},
+		{
+			"id": "cc2c2f4f-ad21-28d9-431c-9453ca3022a4",
+			"headers": "//Authorization: Bearer $2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e\n//Origin: http://localhost:4200\n//Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer $2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "Origin",
+					"value": "http://localhost:4200",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://localhost:8080/rest/cars?rentable=true",
+			"queryParams": [
+				{
+					"key": "rentable",
+					"value": "true",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "9c27817f-2e39-714b-d5f1-face3c8ff4a4",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8080/rest/cars?rentable=true",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1587302637338,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\r\n\"id\": \"1\",\r\n\"Description\" : \"Task1\"\r\n}"
+		}
+	]
+}

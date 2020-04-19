@@ -27,6 +27,11 @@ mvn jacoco:report
 ```
 Open the "target/site/jacoco/index.html" file to see the test coverage report.
 
+### 5. Postman collection
+[./car-service.postman_collection.json](car-service.postman_collection.json)
+
+
+
 Resources:
 1. https://www.udemy.com/course/spring-boot-egitimi/
 2. https://www.toptal.com/java/spring-boot-rest-api-error-handling
