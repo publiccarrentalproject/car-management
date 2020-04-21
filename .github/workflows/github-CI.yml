@@ -20,7 +20,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build with Maven
-      run: 
-        cd backend
-        - mvn package -Dmaven.test.skip=true --file pom.xml
+      - name: Build with Maven
+      run:
+        - mvn package -Dmaven.test.skip=true --file backend/pom.xml
