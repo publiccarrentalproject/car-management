@@ -31,12 +31,10 @@ class CarSearchComponent extends Component {
                     </Grid>
                     <Grid item xs={6} spacing={1}>
                     </Grid>
-                    <Grid item xs={6} spacing={1} justify="flex-start">
+                    <Grid item xs={11} spacing={1}>
                         <Button variant="outlined" color="primary">
                             Search
                         </Button>
-                    </Grid>
-                    <Grid item xs={6} spacing={1}>
                     </Grid>
 
                 </Grid>

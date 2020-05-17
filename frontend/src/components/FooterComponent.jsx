@@ -10,7 +10,7 @@ class FooterComponent extends Component {
         return (<AppBar position="static">
             <Toolbar>
                 <Typography variant="h6">
-                    Car Service Admin Page
+
                 </Typography>
             </Toolbar>
         </AppBar>)

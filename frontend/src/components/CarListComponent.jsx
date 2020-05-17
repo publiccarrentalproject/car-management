@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const demoCarList = [
+const sampleCarList = [
     { plateNumber: 'AA-33-DD', brand: 'Toyota', model: 'Corolla', year: 2011, color: 'Gray' },
     { plateNumber: 'BB-44-CC', brand: 'Volkswagen', model: 'Polo', year: 2015, color: 'White' },
     { plateNumber: 'EE-33-UF', brand: 'Toyota', model: 'Yaris', year: 2018, color: 'Black' },
@@ -47,13 +47,13 @@ class CarListComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            demoCarList: []
+            carList: sampleCarList
         }
         this.refreshTodos = this.refreshTodos.bind(this)
     }
 
     componentDidMount() {
-        this.refreshTodos()
+        //this.refreshTodos()
     }
 
     refreshTodos() {
@@ -61,7 +61,7 @@ class CarListComponent extends Component {
             .then(
                 response => {
                     this.setState({
-                        demoCarList: response.data
+                        carList: response.data
                     })
                 }
             )
@@ -83,7 +83,7 @@ class CarListComponent extends Component {
                     </TableHead>
                     <TableBody>
 
-                        {this.state.demoCarList.map((row) => (
+                        {this.state.carList.map((row) => (
                             <StyledTableRow key={row.name}>
                                 <StyledTableCell align="right">{row.plateNumber}</StyledTableCell>
                                 <StyledTableCell align="right">{row.brand}</StyledTableCell>
