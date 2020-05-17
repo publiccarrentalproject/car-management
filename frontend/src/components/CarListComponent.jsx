@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CarDataService from '../api/car/CarDataService'
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -43,6 +44,29 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 class CarListComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            demoCarList: []
+        }
+        this.refreshTodos = this.refreshTodos.bind(this)
+    }
+
+    componentDidMount() {
+        this.refreshTodos()
+    }
+
+    refreshTodos() {
+        CarDataService.retrieveAllCars()
+            .then(
+                response => {
+                    this.setState({
+                        demoCarList: response.data
+                    })
+                }
+            )
+    }
+
     render() {
 
         return (
@@ -58,7 +82,8 @@ class CarListComponent extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {demoCarList.map((row) => (
+
+                        {this.state.demoCarList.map((row) => (
                             <StyledTableRow key={row.name}>
                                 <StyledTableCell align="right">{row.plateNumber}</StyledTableCell>
                                 <StyledTableCell align="right">{row.brand}</StyledTableCell>
