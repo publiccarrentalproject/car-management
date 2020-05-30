@@ -47,13 +47,13 @@ class CarListComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            carList: sampleCarList
+            carList: []
         }
         this.refreshTodos = this.refreshTodos.bind(this)
     }
 
     componentDidMount() {
-        //this.refreshTodos()
+        this.refreshTodos()
     }
 
     refreshTodos() {

@@ -6,6 +6,10 @@ class CarDataService {
         return axios.get(`${API_URL}/rest/cars?rentable=true`)
     }
 
+    retrieveCar(plateNumber) {
+        return axios.get(`${API_URL}/rest/car/${plateNumber}`)
+    }
+
     createCar(car) {
         return axios.post(`${API_URL}/rest/car`, car)
     }
