@@ -11,6 +11,8 @@ class CarDataService {
     }
 
     createCar(car) {
+        console.log(car);
+
         return axios.post(`${API_URL}/rest/car`, car)
     }
 
