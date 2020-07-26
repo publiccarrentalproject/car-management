@@ -9,16 +9,18 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.1",
-    "classnames": "^2.2.5",
+    "classnames": "^2.2.6",
     "formik": "^2.1.4",
     "material-ui-banner": "^1.4.3",
     "node-sass": "^4.14.0",
+    "primeflex": "^2.0.0-rc.1",
     "primeicons": "^2.0.0",
-    "primereact": "^4.2.0",
+    "primereact": "^4.2.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-transition-group": "^2.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
