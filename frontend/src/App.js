@@ -1,12 +1,12 @@
 import React from 'react';
 
-import CarServiceAppComponent from './components/CarServiceAppComponent';
+import CarAdminDataTableComponent from './components/CarAdminDataTableComponent';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <CarServiceAppComponent />
+      <CarAdminDataTableComponent />
     </div>
   );
 }
