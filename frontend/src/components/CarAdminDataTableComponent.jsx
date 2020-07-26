@@ -15,6 +15,7 @@ import {InputText} from 'primereact/inputtext';
 import CarDataService from '../api/car/CarDataService'
 
 
+
 export class CarAdminDataTableComponent extends Component {
 
     constructor() {
@@ -46,6 +47,10 @@ export class CarAdminDataTableComponent extends Component {
         let cars = [...this.state.cars];
         if(this.newCar) {
             cars.push(this.state.car);
+            this.state.car.rentable=true
+            console.log(this.state.car);
+
+
             CarDataService.createCar(this.state.car);
         }
         else {
@@ -90,13 +95,16 @@ export class CarAdminDataTableComponent extends Component {
     addNew() {
         this.newCar = true;
         this.setState({
-            car: {vin:'', year: '', brand: '', color: ''},
+            car: {plateNumber:'', brand: '', model: '', year: '',
+                  engine: '', fuelType: '', fuelConsumption: '',
+                  numberOfDoors: '', numberOfSeats: ''},
             displayDialog: true
         });
     }
 
     render() {
-        let header = <div className="p-clearfix" style={{lineHeight:'1.87em'}}>CRUD for Cars </div>;
+
+        let header = <div className="p-clearfix" style={{lineHeight:'1.87em'}}>Car Admin Page </div>;
 
         let footer = <div className="p-clearfix" style={{width:'100%'}}>
             <Button style={{float:'left'}} label="Add" icon="pi pi-plus" onClick={this.addNew}/>
@@ -118,8 +126,11 @@ export class CarAdminDataTableComponent extends Component {
                         <Column field="brand" header="Brand" sortable={true}/>
                         <Column field="model" header="Model" sortable={true}/>
                         <Column field="year" header="Year" sortable={true}/>
-                        <Column field="color" header="Color" sortable={true}/>
-
+                        <Column field="engine" header="Engine" sortable={true}/>
+                        <Column field="fuelType" header="Fuel Type" sortable={true}/>
+                        <Column field="fuelConsumption" header="Fuel Consumption" sortable={true}/>
+                        <Column field="numberOfDoors" header="Number of Doors" sortable={true}/>
+                        <Column field="numberOfSeats" header="Number of Seats" sortable={true}/>
                     </DataTable>
 
                     <Dialog visible={this.state.displayDialog} style={{width: '300px'}} header="Car Details" modal={true} footer={dialogFooter} onHide={() => this.setState({displayDialog: false})}
@@ -147,12 +158,32 @@ export class CarAdminDataTableComponent extends Component {
                                     <InputText id="year" onChange={(e) => {this.updateProperty('year', e.target.value)}} value={this.state.car.year}/>
                                 </div>
 
-                                <div className="p-col-4" style={{padding:'.75em'}}><label htmlFor="color">Color</label></div>
+                                <div className="p-col-4" style={{padding:'.75em'}}><label htmlFor="engine">Engine</label></div>
                                 <div className="p-col-8" style={{padding:'.5em'}}>
-                                    <InputText id="color" onChange={(e) => {this.updateProperty('color', e.target.value)}} value={this.state.car.color}/>
+                                    <InputText id="engine" onChange={(e) => {this.updateProperty('engine', e.target.value)}} value={this.state.car.engine}/>
                                 </div>
 
-                            </div>
+                                <div className="p-col-4" style={{padding:'.75em'}}><label htmlFor="fuelType">Fuel Type</label></div>
+                                <div className="p-col-8" style={{padding:'.5em'}}>
+                                    <InputText id="fuelType" onChange={(e) => {this.updateProperty('fuelType', e.target.value)}} value={this.state.car.fuelType}/>
+                                </div>
+
+                                <div className="p-col-4" style={{padding:'.75em'}}><label htmlFor="fuelConsumption">Fuel Consumption</label></div>
+                                <div className="p-col-8" style={{padding:'.5em'}}>
+                                    <InputText id="fuelConsumption" onChange={(e) => {this.updateProperty('fuelConsumption', e.target.value)}} value={this.state.car.fuelConsumption}/>
+                                </div>
+
+                                <div className="p-col-4" style={{padding:'.75em'}}><label htmlFor="numberOfDoors">Number of Doors</label></div>
+                                <div className="p-col-8" style={{padding:'.5em'}}>
+                                    <InputText id="numberOfDoors" onChange={(e) => {this.updateProperty('numberOfDoors', e.target.value)}} value={this.state.car.numberOfDoors}/>
+                                </div>
+
+                                <div className="p-col-4" style={{padding:'.75em'}}><label htmlFor="numberOfSeats">Number of Seats</label></div>
+                                <div className="p-col-8" style={{padding:'.5em'}}>
+                                    <InputText id="numberOfSeats" onChange={(e) => {this.updateProperty('numberOfSeats', e.target.value)}} value={this.state.car.numberOfSeats}/>
+                                </div>
+
+                           </div>
                         }
                     </Dialog>
                 </div>
