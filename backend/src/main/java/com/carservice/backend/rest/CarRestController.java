@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="http://localhost:8181")
 public class CarRestController {
     @Autowired
     private CarService carService;
