@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.21.1",
+    "babel-jest": "^26.6.3",
     "classnames": "^2.2.6",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
